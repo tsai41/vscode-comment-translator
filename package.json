@@ -1,0 +1,107 @@
+{
+  "name": "vscode-comment-translator",
+  "displayName": "Comment Translator",
+  "description": "Translate source code comments with configurable providers (MTran or Octopus).",
+  "version": "0.3.0",
+  "publisher": "local",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/tsai41/vscode-comment-translator.git"
+  },
+  "engines": {
+    "vscode": "^1.85.0"
+  },
+  "categories": [
+    "Other"
+  ],
+  "activationEvents": [
+    "onStartupFinished",
+    "onCommand:mtranCommentTranslator.translateCurrentComment",
+    "onCommand:mtranCommentTranslator.configureProvider"
+  ],
+  "main": "./src/extension.js",
+  "contributes": {
+    "commands": [
+      {
+        "command": "mtranCommentTranslator.translateCurrentComment",
+        "title": "Comment Translator: Translate Current Comment"
+      },
+      {
+        "command": "mtranCommentTranslator.configureProvider",
+        "title": "Comment Translator: Configure Provider"
+      }
+    ],
+    "configuration": {
+      "title": "Comment Translator",
+      "properties": {
+        "mtranCommentTranslator.provider": {
+          "type": "string",
+          "enum": ["mtran", "octopus"],
+          "default": "mtran",
+          "description": "Active translation provider."
+        },
+        "mtranCommentTranslator.displayMode": {
+          "type": "string",
+          "enum": ["hover", "codelens"],
+          "default": "hover",
+          "description": "How translation is displayed: hover (on-demand) or codelens (auto above line)."
+        },
+        "mtranCommentTranslator.apiUrl": {
+          "type": "string",
+          "default": "http://127.0.0.1:8989",
+          "description": "MTranServer base URL (no trailing slash)."
+        },
+        "mtranCommentTranslator.apiToken": {
+          "type": "string",
+          "default": "",
+          "description": "Optional MTranServer token."
+        },
+        "mtranCommentTranslator.octopus.endpoint": {
+          "type": "string",
+          "default": "",
+          "description": "Octopus endpoint (base URL or full /v1/chat/completions URL)."
+        },
+        "mtranCommentTranslator.octopus.model": {
+          "type": "string",
+          "default": "",
+          "description": "Model name for Octopus provider."
+        },
+        "mtranCommentTranslator.octopus.token": {
+          "type": "string",
+          "default": "",
+          "description": "Bearer token for Octopus provider."
+        },
+        "mtranCommentTranslator.octopus.systemPrompt": {
+          "type": "string",
+          "default": "You are a translation engine for source code comments. Return only translated text.",
+          "description": "System prompt for Octopus provider."
+        },
+        "mtranCommentTranslator.sourceLang": {
+          "type": "string",
+          "default": "auto",
+          "description": "Source language code."
+        },
+        "mtranCommentTranslator.targetLang": {
+          "type": "string",
+          "default": "zh-Hant",
+          "description": "Target language code."
+        },
+        "mtranCommentTranslator.autoTranslate.enabled": {
+          "type": "boolean",
+          "default": true,
+          "description": "When displayMode=codelens, auto translate active comment and show above line."
+        },
+        "mtranCommentTranslator.autoTranslate.debounceMs": {
+          "type": "number",
+          "default": 400,
+          "minimum": 100,
+          "description": "Delay before codelens auto translation after cursor/document changes."
+        }
+      }
+    }
+  },
+  "scripts": {
+    "test": "node --test test/*.test.js"
+  },
+  "devDependencies": {}
+}
