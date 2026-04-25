@@ -4,6 +4,7 @@
   "description": "Translate source code comments with configurable providers (MTran or Octopus).",
   "version": "0.3.0",
   "publisher": "local",
+  "license": "MIT",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/tsai41/vscode-comment-translator.git"
